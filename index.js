@@ -94,10 +94,8 @@ async function addActionBot(name, text) {
     const allData = () => {
         axios.all([reqOne, reqTwo]).then(axios.spread((...responses) => {
             binance.push(responses[0].data)
-            // console.log(binance);
             whiteBit.push(responses[1].data.result)
             const ar = whiteBit.flat()
-            // console.log(ar);
 
             // Формула , яка робить чудо
             const my = [];
@@ -125,7 +123,6 @@ async function addActionBot(name, text) {
             }
             getArr(ar)
             const filterWhite = my.find(item => item.pair == binance[0].symbol)
-            console.log(filterWhite);
 
             // Запуск команди
             const b = binance[0].price ? binance[0].price : null;
