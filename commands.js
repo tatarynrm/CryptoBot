@@ -2,6 +2,7 @@ const commands = `
 /start - Перезапустити бота
 /all - Усі доступні команди
 /crypto - Обрати торгові пари
+/all_crypto_shops - Популярні критовалютні біржі
 `;
 
 const uah = `

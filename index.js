@@ -3,7 +3,7 @@ const axios = require('axios');
 require('dotenv').config();
 const text = require('./commands');
 const date = require('date-and-time');
-
+const data = require('./cryptos.json')
 const owner = '@cryptotraderUA_1';
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>
@@ -166,16 +166,28 @@ addActionBot('USDTUAH', text.uah)
 // addActionBot('EURUSDT', text.eur);
 // addActionBot('USDT', text.btc);
 
-// setTimeout(() => {
-//     console.log(binance);
-// }, 3000);
+bot.command('all_crypto_shops', async (ctx) => {
 
-// ДЛЯ ПЕРЕВІРКИ ЧАСУ
-// function logTime() {
-//     console.log(time);
-// }
+    function showData() {
+        data.forEach(item => {
 
-// setTimeout(logTime, 2000)
+            ctx.replyWithMarkdownV2(`
+                [${item.name}](${item.url})
+                `)
+        });
+
+    }
+
+    ctx.reply('Зачекайте')
+
+    function loading() {
+        ctx.reply('Дані завантажуються...')
+    }
+    setTimeout(showData, 2000);
+    setTimeout(loading, 500)
+
+
+})
 
 
 // Запускаєм фор овер енд овер егейн !)
