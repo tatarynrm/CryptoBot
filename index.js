@@ -3,16 +3,6 @@ const axios = require('axios');
 require('dotenv').config();
 const text = require('./commands');
 
-let date = new Date();
-let dt = {
-    date: date.toLocaleDateString(),
-    hours: date.getHours(),
-    minutes: date.getMinutes(),
-    seconds: date.getSeconds()
-}
-let sec = dt.seconds < 10 ? '0' + dt.seconds : dt.seconds;
-let minutes = dt.minutes < 10 ? '0' + dt.minutes : dt.minutes;
-let hours = dt.hours < 10 ? '0' + dt.hours : dt.hours;
 
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -50,6 +40,17 @@ bot.command('crypto', async (ctx) => {
 let binance = [];
 let whiteBit = [];
 async function addActionBot(name, text) {
+    let date = new Date();
+    let dt = {
+        date: date.toLocaleDateString(),
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds()
+    }
+    let sec = dt.seconds < 10 ? '0' + dt.seconds : dt.seconds;
+    let minutes = dt.minutes < 10 ? '0' + dt.minutes : dt.minutes;
+    let hours = dt.hours < 10 ? '0' + dt.hours : dt.hours;
+
 
     let one = `https://api.binance.com/api/v3/ticker/price?symbol=${name}`;
     let two = `https://whitebit.com/api/v2/public/ticker`;
