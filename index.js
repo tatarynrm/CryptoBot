@@ -4,7 +4,7 @@ require('dotenv').config();
 const text = require('./commands');
 const date = require('date-and-time');
 
-
+const owner = '@cryptotraderUA_1';
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>
     ctx.reply(`
@@ -17,6 +17,7 @@ bot.start((ctx) =>
 *Функціонал поки-що обмежений,але ми 
 працюємо над створенням 
 розширених запитів*
+Розробник бота : ${owner}
 
 ${text.commands}
 
