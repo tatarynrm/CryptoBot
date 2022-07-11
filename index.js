@@ -58,10 +58,10 @@ async function addActionBot(name, text) {
     const allData = () => {
         axios.all([reqOne, reqTwo]).then(axios.spread((...responses) => {
             binance.push(responses[0].data)
-            console.log(binance);
+            // console.log(binance);
             whiteBit.push(responses[1].data.result)
             const ar = whiteBit.flat()
-            console.log(ar);
+            // console.log(ar);
 
             // Формула , яка робить чудо
             const my = [];
@@ -88,9 +88,9 @@ async function addActionBot(name, text) {
                 return my.push(...newArr)
             }
             getArr(ar)
-            console.log('MYYYYYY', my);
+            // console.log('MYYYYYY', my);
             const filterWhite = my.find(item => item.pair == binance[0].symbol)
-            console.log(filterWhite);
+            // console.log(filterWhite);
             // Запуск команди
             const b = binance[0].price ? binance[0].price : null;
             let binancePrice = (+b).toFixed(4)
