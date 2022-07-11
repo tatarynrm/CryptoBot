@@ -121,7 +121,6 @@ async function addActionBot(name, text) {
                         pair: pair[ind]
                     }
                 })
-                console.log('--------------------Новий масив', newArr);
                 return my.push(...newArr)
             }
             getArr(ar)
@@ -169,7 +168,7 @@ bot.command('all_crypto_shops', async (ctx) => {
     function showData() {
         data.forEach(item => {
 
-            ctx.replyWithMarkdownV2(`
+            ctx.replyWithMarkdown(`
                 [${item.name}](${item.url})
                 `)
         });
