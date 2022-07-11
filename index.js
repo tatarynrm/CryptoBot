@@ -4,6 +4,7 @@ require('dotenv').config();
 const text = require('./commands');
 const date = require('date-and-time');
 const data = require('./cryptos.json')
+const data2 = require('./cryptos2.json')
 const owner = '@cryptotraderUA_1';
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>
@@ -140,6 +141,9 @@ _Дата та точний час запиту_
         
 /crypto - Зробити запит ще раз
 
+
+/start - Перезапустити бота
+
             `, { disable_web_page_preview: true })
 
                 } catch (e) {
@@ -161,28 +165,88 @@ addActionBot('USDTUAH', text.uah)
 // addActionBot('USDT', text.btc);
 
 bot.command('all_crypto_shops', async (ctx) => {
-
     function showData() {
         data.forEach(item => {
 
             ctx.replyWithMarkdown(`
-                [${item.name}](${item.url})
-                `)
+                    [${item.name}](${item.url})
+                    `)
         });
-
     }
-
     ctx.reply('Зачекайте')
 
     function loading() {
         ctx.reply('Дані завантажуються...')
     }
-    setTimeout(showData, 2000);
+
     setTimeout(loading, 500)
+    setTimeout(showData, 3000);
+    function loadMore() {
+        ctx.replyWithHTML('Завантажити ще ?', Markup.inlineKeyboard(
+            [
+                [Markup.button.callback('Так', 'YesMore')], [Markup.button.callback('Ні', 'NoMore')]
 
+            ]))
+    }
 
+    setTimeout(loadMore, 7000)
+
+}
+)
+
+bot.action('YesMore', (ctx) => {
+    function showData() {
+        data2.forEach(item => {
+
+            ctx.replyWithMarkdown(`
+                    [${item.name}](${item.url})
+                    `)
+        });
+    }
+    ctx.reply('Зачекайте')
+
+    function loading() {
+        ctx.reply('Дані завантажуються...')
+    }
+
+    setTimeout(loading, 500)
+    setTimeout(showData, 3000);
+
+    function backTo() {
+        ctx.reply(`
+
+Я створений для того , щоб допомогти тобі з пошуком найнижчої ціни на ринку 
+
+               ₿ - Криптовалюти - ₿ 💪
+
+*Функціонал поки-що обмежений,але ми 
+працюємо над створенням 
+розширених запитів*
+Розробник бота : ${owner}
+
+${text.commands}
+
+`)
+
+    }
+    setTimeout(backTo, 9000)
 })
+bot.action('NoMore', (ctx) => {
+    ctx.reply(`
 
+Я створений для того , щоб допомогти тобі з пошуком найнижчої ціни на ринку 
+
+               ₿ - Криптовалюти - ₿ 💪
+
+*Функціонал поки-що обмежений,але ми 
+працюємо над створенням 
+розширених запитів*
+Розробник бота : ${owner}
+
+${text.commands}
+
+`)
+})
 
 // Запускаєм фор овер енд овер егейн !)
 bot.launch()
