@@ -96,7 +96,6 @@ async function addActionBot(name, text) {
             binance.push(responses[0].data)
             // console.log(binance);
             whiteBit.push(responses[1].data.result)
-            console.log('THIS IS WHITEBIT', whiteBit);
             const ar = whiteBit.flat()
             // console.log(ar);
 
