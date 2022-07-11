@@ -2,7 +2,7 @@ const { Telegraf, Markup } = require('telegraf')
 const axios = require('axios');
 require('dotenv').config();
 const text = require('./commands');
-
+const date = require('date-and-time');
 
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -22,6 +22,17 @@ ${text.commands}
 
 `));
 
+bot.command('all', async (ctx) => {
+    await ctx.reply(
+        `Даний розділ меню знходиться розробці
+скористайтесь командами:
+
+/start
+
+/crypto
+        `
+    )
+})
 
 
 bot.command('crypto', async (ctx) => {
@@ -39,17 +50,41 @@ bot.command('crypto', async (ctx) => {
 
 let binance = [];
 let whiteBit = [];
+let time = [];
+
 async function addActionBot(name, text) {
-    let date = new Date();
-    let dt = {
-        date: date.toLocaleDateString(),
-        hours: date.getHours(),
-        minutes: date.getMinutes(),
-        seconds: date.getSeconds()
+
+    // Були проблеми з оновленням часу тому зробив функцією
+
+    // let date = new Date();
+    // let dt = {
+    //     date: date.toLocaleDateString(),
+    //     hours: date.getHours(),
+    //     minutes: date.getMinutes(),
+    //     seconds: date.getSeconds()
+    // }
+    // let sec = dt.seconds < 10 ? '0' + dt.seconds : dt.seconds;
+    // let minutes = dt.minutes < 10 ? '0' + dt.minutes : dt.minutes;
+    // let hours = dt.hours < 10 ? '0' + dt.hours : dt.hours;
+    // let dat = dt.date;
+
+    // --------------------------------------------------------------------
+
+
+    function reloadTime() {
+        let date = new Date();
+        let dt = {
+            date: date.toLocaleDateString(),
+            hours: date.getHours(),
+            minutes: date.getMinutes(),
+            seconds: date.getSeconds()
+        }
+        time.length = 0;
+        return time.push(dt)
     }
-    let sec = dt.seconds < 10 ? '0' + dt.seconds : dt.seconds;
-    let minutes = dt.minutes < 10 ? '0' + dt.minutes : dt.minutes;
-    let hours = dt.hours < 10 ? '0' + dt.hours : dt.hours;
+    setInterval(reloadTime, 500);
+
+
 
 
     let one = `https://api.binance.com/api/v3/ticker/price?symbol=${name}`;
@@ -61,6 +96,7 @@ async function addActionBot(name, text) {
             binance.push(responses[0].data)
             // console.log(binance);
             whiteBit.push(responses[1].data.result)
+            console.log('THIS IS WHITEBIT', whiteBit);
             const ar = whiteBit.flat()
             // console.log(ar);
 
@@ -86,28 +122,26 @@ async function addActionBot(name, text) {
                         pair: pair[ind]
                     }
                 })
+                console.log('--------------------Новий масив', newArr);
                 return my.push(...newArr)
             }
             getArr(ar)
-            // console.log('MYYYYYY', my);
             const filterWhite = my.find(item => item.pair == binance[0].symbol)
-            // console.log(filterWhite);
+            console.log(filterWhite);
+
             // Запуск команди
             const b = binance[0].price ? binance[0].price : null;
             let binancePrice = (+b).toFixed(4)
             bot.action(name, async (ctx) => {
                 try {
-
-                    // console.log('BINANCE', binance);
-                    // console.log('WHITEBIT', filterWhite);
                     await ctx.answerCbQuery()
                     await ctx.replyWithHTML(text)
                     await ctx.replyWithMarkdown(`
 _Дата та точний час запиту_
-*${dt.date}* - ${hours}:${minutes}:${sec}
+*${time[0].date}* - ${time[0].hours}:${time[0].minutes < 10 ? '0' + time[0].minutes : time[0].minutes}:${time[0].seconds < 10 ? '0' + time[0].seconds : time[0].seconds}
         
         [Binance](https://www.binance.com/uk-UA/activity/referral-entry?fromActivityPage=true&ref=LIMIT_FYA2313M) *${binance[0].symbol}* - **${binancePrice}**
-       [WhiteBit](https://whitebit.com/referral/69f53aee-28aa-4e88-8395-950d49ebd938)  *${filterWhite.pair}* - **${filterWhite.price}**
+        [WhiteBit](https://whitebit.com/referral/69f53aee-28aa-4e88-8395-950d49ebd938)  *${filterWhite.pair}* - **${filterWhite.price}**
         
 /crypto - Зробити запит ще раз
 
@@ -120,14 +154,27 @@ _Дата та точний час запиту_
         })).catch(err => {
             console.log(err);
         })
+
+
     }
-    allData()
+    allData();
 
 }
 
 addActionBot('USDTUAH', text.uah)
-addActionBot('EURUSDT', text.eur);
-addActionBot('USDT', text.btc);
+// addActionBot('EURUSDT', text.eur);
+// addActionBot('USDT', text.btc);
+
+// setTimeout(() => {
+//     console.log(binance);
+// }, 3000);
+
+// ДЛЯ ПЕРЕВІРКИ ЧАСУ
+// function logTime() {
+//     console.log(time);
+// }
+
+// setTimeout(logTime, 2000)
 
 
 // Запускаєм фор овер енд овер егейн !)
