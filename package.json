@@ -1,0 +1,20 @@
+{
+  "name": "botformyself",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "noris",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "telegraf": "^4.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
