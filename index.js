@@ -83,7 +83,7 @@ async function addActionBot(name, text) {
         time.length = 0;
         return time.push(dt)
     }
-    setInterval(reloadTime, 500);
+    reloadTime()
 
 
 
