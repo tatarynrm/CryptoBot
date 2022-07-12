@@ -52,8 +52,8 @@ bot.command('crypto', async (ctx) => {
 let binance = [];
 let whiteBit = [];
 let time = [];
-
 async function addActionBot(name, text) {
+
 
     // Були проблеми з оновленням часу тому зробив функцією
 
@@ -85,15 +85,12 @@ async function addActionBot(name, text) {
     }
     reloadTime()
 
-
-
-
     let one = `https://api.binance.com/api/v3/ticker/price?symbol=${name}`;
     let two = `https://whitebit.com/api/v2/public/ticker`;
-    const reqOne = axios.get(one)
-    const reqTwo = axios.get(two)
-    const allData = () => {
-        axios.all([reqOne, reqTwo]).then(axios.spread((...responses) => {
+    const reqOne = await axios.get(one)
+    const reqTwo = await axios.get(two)
+    const allData = async () => {
+        await axios.all([reqOne, reqTwo]).then(axios.spread((...responses) => {
             binance.push(responses[0].data)
             whiteBit.push(responses[1].data.result)
             const ar = whiteBit.flat()
@@ -157,10 +154,14 @@ _Дата та точний час запиту_
 
     }
     allData();
-
 }
 
-addActionBot('USDTUAH', text.uah)
+function recallAllData() {
+    return addActionBot('USDTUAH', text.uah)
+}
+setInterval(recallAllData, 500)
+
+
 // addActionBot('EURUSDT', text.eur);
 // addActionBot('USDT', text.btc);
 
