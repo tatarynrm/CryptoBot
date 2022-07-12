@@ -159,7 +159,7 @@ _Дата та точний час запиту_
 function recallAllData() {
     return addActionBot('USDTUAH', text.uah)
 }
-setInterval(recallAllData, 500)
+setInterval(recallAllData, 3000)
 
 
 // addActionBot('EURUSDT', text.eur);
