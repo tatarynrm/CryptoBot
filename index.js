@@ -87,8 +87,8 @@ async function addActionBot(name, text) {
 
     let one = `https://api.binance.com/api/v3/ticker/price?symbol=${name}`;
     let two = `https://whitebit.com/api/v2/public/ticker`;
-    const reqOne = await axios.get(one)
-    const reqTwo = await axios.get(two)
+    const reqOne = axios.get(one)
+    const reqTwo = axios.get(two)
     const allData = async () => {
         await axios.all([reqOne, reqTwo]).then(axios.spread((...responses) => {
             binance.push(responses[0].data)
