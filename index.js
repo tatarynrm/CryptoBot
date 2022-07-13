@@ -5,7 +5,7 @@ const text = require('./commands');
 const date = require('date-and-time');
 const data = require('./cryptos.json')
 const data2 = require('./cryptos2.json')
-const owner = '@cryptotraderUA_1';
+const owner = '@web_developer_Ukraine';
 const bot = new Telegraf(process.env.BOT_TOKEN);
 bot.start((ctx) =>
     ctx.reply(`
