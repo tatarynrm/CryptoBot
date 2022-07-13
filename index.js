@@ -160,11 +160,8 @@ _Дата та точний час запиту_
     }
     allData();
 }
+addActionBot('USDTUAH', text.uah)
 
-function recallAllData() {
-    return addActionBot('USDTUAH', text.uah)
-}
-setInterval(recallAllData, 3000)
 
 
 // addActionBot('EURUSDT', text.eur);
