@@ -39,16 +39,30 @@ bot.command('all', async (ctx) => {
         `
     )
 })
-
+const cryptoCallBackData = [
+    { name: 'USDT / UAH', data: 'USDTUAH' },
+    { name: 'USDT / BTC', data: 'USDTBTC' },
+];
 
 bot.command('crypto', async (ctx) => {
     try {
-        await ctx.replyWithHTML('<b>Торгові пари</b>', Markup.inlineKeyboard(
-            [
-                [Markup.button.callback('USDT / UAH', 'USDTUAH')]
-                // Markup.button.callback('USDT / EUR', 'EURUSDT')
-            ]
-        ))
+        for (let i = 0; i < cryptoCallBackData.length; i++) {
+            const data = cryptoCallBackData[i];
+            console.log(data);
+            await ctx.replyWithHTML('<b>Торгові пари</b>', Markup.inlineKeyboard(
+                [
+                    [Markup.button.callback(`${data.name}`, `${data.data}`)]
+                    // Markup.button.callback('USDT / EUR', 'EURUSDT')
+                ]
+            ))
+
+        }
+        // await ctx.replyWithHTML('<b>Торгові пари</b>', Markup.inlineKeyboard(
+        //     [
+        //         [Markup.button.callback('USDT / UAH', 'USDTUAH')]
+        //         // Markup.button.callback('USDT / EUR', 'EURUSDT')
+        //     ]
+        // ))
     } catch (e) {
         console.error(e);
     }
@@ -161,6 +175,7 @@ _Дата та точний час запиту_
     allData();
 }
 addActionBot('USDTUAH', text.uah)
+addActionBot('BTCUSDT', text.btc)
 
 
 
