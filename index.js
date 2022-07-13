@@ -31,7 +31,7 @@ ${text.commands}
 
 bot.command('all', async (ctx) => {
     await ctx.reply(
-        `Даний розділ меню знходиться розробці
+        `Даний розділ меню знаходиться розробці
 скористайтесь командами:
 /start - Перезапустити бота
 /crypto - Обрати торгові пари
@@ -40,15 +40,13 @@ bot.command('all', async (ctx) => {
     )
 })
 const cryptoCallBackData = [
-    { name: 'USDT / UAH', data: 'USDTUAH' },
-    { name: 'USDT / BTC', data: 'USDTBTC' },
+    { name: 'USDT / UAH', data: 'USDTUAH' }
 ];
 
 bot.command('crypto', async (ctx) => {
     try {
         for (let i = 0; i < cryptoCallBackData.length; i++) {
             const data = cryptoCallBackData[i];
-            console.log(data);
             await ctx.replyWithHTML('<b>Торгові пари</b>', Markup.inlineKeyboard(
                 [
                     [Markup.button.callback(`${data.name}`, `${data.data}`)]
@@ -73,24 +71,6 @@ let whiteBit = [];
 let time = [];
 async function addActionBot(name, text) {
 
-
-    // Були проблеми з оновленням часу тому зробив функцією
-
-    // let date = new Date();
-    // let dt = {
-    //     date: date.toLocaleDateString(),
-    //     hours: date.getHours(),
-    //     minutes: date.getMinutes(),
-    //     seconds: date.getSeconds()
-    // }
-    // let sec = dt.seconds < 10 ? '0' + dt.seconds : dt.seconds;
-    // let minutes = dt.minutes < 10 ? '0' + dt.minutes : dt.minutes;
-    // let hours = dt.hours < 10 ? '0' + dt.hours : dt.hours;
-    // let dat = dt.date;
-
-    // --------------------------------------------------------------------
-
-
     function reloadTime() {
         let date = new Date();
         let dt = {
@@ -104,6 +84,7 @@ async function addActionBot(name, text) {
     }
     reloadTime()
 
+    console.log(time);
     let one = `https://api.binance.com/api/v3/ticker/price?symbol=${name}`;
     let two = `https://whitebit.com/api/v2/public/ticker`;
     const reqOne = axios.get(one)
@@ -160,7 +141,7 @@ _Дата та точний час запиту_
 
 /start - Перезапустити бота
 
-            `, { disable_web_page_preview: true })
+            `, { disable_web_page_preview: true, answer_callback_query: true })
 
                 } catch (e) {
 
@@ -174,14 +155,14 @@ _Дата та точний час запиту_
     }
     allData();
 }
+
+// addActionBot('BTCUSDT', text.btc)
 addActionBot('USDTUAH', text.uah)
-addActionBot('BTCUSDT', text.btc)
 
 
 
 // addActionBot('EURUSDT', text.eur);
 // addActionBot('USDT', text.btc);
-
 bot.command('all_crypto_shops', async (ctx) => {
     function showData() {
         data.forEach(item => {
